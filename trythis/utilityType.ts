@@ -15,7 +15,22 @@ type Change<T, K extends keyof T, t> = {
   [x in keyof T]: x extends K ? t : T[x];
 };
 type DeptCaptain = Change<IDept, "captain", IUser>;
-type Err = Change<IDept, "somekey", IUser>; // Error!!!
+// type Err = Change<IDept, "somekey", IUser>; // Error!!!
+
+type Change2<T, K extends keyof T, t> = Omit<T, K> & {
+  [x in K]: t;
+};
+type DeptCaptain2 = Change2<IDept, "captain", IUser>;
+// type Err2 = Change2<IDept, "somekey", IUser>; // Error!!!
+
+/*
+type DeptCaptain {
+  id: number;
+  age: string;
+  dname: string;
+  captain: IUser;
+}
+*/
 
 type Combine<T, U> = {
   [x in keyof (T & U)]: x extends keyof T
@@ -26,23 +41,15 @@ type Combine<T, U> = {
     ? U[x]
     : never;
 };
-type ICombined = Combine<IUser, IDept>;
 
-type Change2<T, K extends keyof T, t> = Omit<T, K> & {
-  [x in K]: t;
+type Combine2<T, U> = {
+  [x in keyof (T & U)]: x extends keyof T & keyof U ? T[x] | U[x] : (T & U)[x];
 };
 
-type DeptCaptain2 = Change2<IDept, "captain", IUser>;
-type Err2 = Change2<IDept, "somekey", IUser>; // Error!!!
+type ICombined = Combine<IUser, IDept>;
+type ICombined2 = Combine2<IUser, IDept>;
 
 /*
-type DeptCaptain {
-  id: number;
-  age: string;
-  dname: string;
-  captain: IUser;
-}
-
 type ICombined {
   id: number;
   age: string | number;

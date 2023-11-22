@@ -11,7 +11,7 @@ class Subclass extends Base {
     this.isPublicImplicit; // OK
     this.isPublicExplicit; // OK
     this.isProtected; // OK
-    this.isPrivate;
+    // this.isPrivate;
     // Error : Property 'isPrivate' is private and only accessible within class 'Base'.
     console.log("123");
   }
